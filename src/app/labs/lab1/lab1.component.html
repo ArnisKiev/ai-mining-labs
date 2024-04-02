@@ -1,0 +1,39 @@
+<form class="container" [formGroup]="form">
+    <h2>Обчислення: середнє значення (Х сер), середньоквадратичне відхилення та дисперсію.</h2>
+    <div class="control-panel">
+        <div class="input-wrapper u-max-width-150">
+            <label class="label-common">Кількість елементів</label>
+            <input type="number" formControlName="countElements" min="1" />
+        </div>
+
+        <button class="button button--yellow" (click)="getResultCkicked()">Отримати результат</button>
+    </div>
+    @if (showResultPanel$ | async) {
+    <div class="control-panel">
+        <span class="results">x <sub>сер</sub> = {{xAvg$ | async}}</span>
+        <span class="results">x <sub>сер кв від</sub> = {{standardDeviation$ | async}}</span>
+        <span class="results">D = {{D$ | async}}</span>
+    </div>
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    x<sub>i</sub>
+                </th>
+                <th>
+                    n<sub>i</sub>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(index of (indexes$| async); track $index) {
+            <tr>
+                <td><input type="number" [formControlName]="'x - ' + index" /></td>
+                <td><input type="number" [formControlName]="'n - ' + index" [min]="0.00000001" /></td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</form>

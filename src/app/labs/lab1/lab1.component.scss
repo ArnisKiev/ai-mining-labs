@@ -1,0 +1,53 @@
+@import "../../../assets/styles/basic.scss";
+
+:host {
+    display: block;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid $yellow;
+    border-radius: 4px;
+    padding: 20px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+h2 {
+    text-align: center;
+    color: $light-grey;
+}
+
+
+.table {
+    background-color: $yellow;
+
+    td { 
+        input {
+            width: 100%;
+        }
+    }
+}
+
+
+.u-max-width-150 {
+    max-width: 150px;
+}
+
+.control-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.results {
+    color: $red;
+}

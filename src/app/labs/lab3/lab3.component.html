@@ -1,0 +1,77 @@
+
+<div class="container">
+
+    <div class="file-panel">
+
+        <div class="input-wrapper">
+            <input type="file" accept=".csv" class="hide-input" id="loaded-features" (change)="onLoadFeatures($event)" />
+            <label class="load-label" for="loaded-features">Завантажити ознаки</label>
+            <label class="label-common" style="font-size: 10px;">{{featureFileName$ | async}}</label>
+        </div>
+       
+        <div class="input-wrapper">
+            <input  type="file" accept=".csv" class="hide-input" id="loaded-objects"  (change)="onLoadObjects($event)" />
+            <label class="load-label" for="loaded-objects">Завантажити об'єкти</label>
+            <label class="label-common" style="font-size: 10px;">{{objectsFileName$ | async}}</label>
+        </div>
+
+       
+    </div>
+   
+
+    <button (click)="onGetClick()" class="button button--yellow button-75">Отримати об'єкт</button>
+
+    @if ((maxObject$ | async)) {
+        Шуканий об'єкт: {{(maxObject$ | async)?.objectName}}
+    }
+
+    
+
+    <form  [formGroup]="form" class="form">
+
+       
+        <div class="control-panel">
+
+            <div class="input-wrapper u-max-width-150">
+                <label class="label-common">Кількість загальних ознак</label>
+                <input type="number" formControlName="countCommonFeatures" />
+            </div>
+
+            <div class="input-wrapper">
+                <label class="label-common">Кількість специфічних ознак</label>
+                <input type="number" formControlName="countSpecificFeatures" />
+            </div>
+        </div>
+
+        <div class="features-panel">
+            <div class="feature-block">
+                @for(formControl of (commonControls$ | async); track $index) {
+                    <div class="input-wrapper">
+                        <label class="label-common">Загальна ознака</label>
+                        <select [formControlName]="formControl" class="select">
+                            @for(option of (featureService.commonFeatures$ | async); track $index) {
+                                <option class="option" [value]="option.name"> {{option.name}}</option>
+                            }
+                        </select>
+                    </div>
+                }
+            </div>
+            
+            <div class="feature-block">
+                @for(formControl of (specificControls$ | async); track $index) {
+                    <div class="input-wrapper u-max-width-150">
+                        <label class="label-common">Специфічна ознака</label>
+                        <select [formControlName]="formControl" class="select">
+                            @for(option of (featureService.specificFeatures$ | async); track $index) {
+                                <option [value]="option.name"> {{option.name}}</option>
+                            }
+                        </select>
+                    </div>
+                }
+            </div>
+        </div>
+        
+    </form>
+
+
+</div>
